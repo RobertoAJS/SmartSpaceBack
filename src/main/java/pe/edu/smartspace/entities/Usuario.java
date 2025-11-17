@@ -3,6 +3,9 @@ package pe.edu.smartspace.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 @Table(name = "usuarios")
@@ -29,6 +32,9 @@ public class Usuario {
     @Column(name = "statusUsuario",nullable = false)
     private boolean statusUsuario;
 
+    // === NUEVO: relación con Role (para que puedas hacer user.getRoles()) ===
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Role> roles = new ArrayList<>();
 
     public Usuario() {
     }
@@ -97,6 +103,14 @@ public class Usuario {
 
     public void setStatusUsuario(boolean statusUsuario) {
         this.statusUsuario = statusUsuario;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 }
 

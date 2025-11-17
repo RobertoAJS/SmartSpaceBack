@@ -64,15 +64,11 @@ public class JwtTokenUtil implements Serializable {
         signingKey = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    private Key getSignInKey() {
-        byte[] keyBytes = secret.getBytes(StandardCharsets.UTF_8);
-        return Keys.hmacShaKeyFor(keyBytes);
-    }
 
     // ---- helpers para claims ----
     private Claims getAllClaimsFromToken(String token) {
         return Jwts.parser()
-                .verifyWith((SecretKey) getSignInKey())
+                .verifyWith(signingKey)           // <-- AHORA USA LA MISMA CLAVE
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
