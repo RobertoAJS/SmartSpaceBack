@@ -3,110 +3,141 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Smartspace | Diseña tus espacios</title>
-    <link rel="stylesheet" href="css/styles.css" />
+    <title>Smartspace</title>
+
+    <!-- FUENTE -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS CORRECTO -->
+    <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
-<!-- Header -->
-<header class="header">
-    <div class="container">
-        <h1 class="logo">Smartspace</h1>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#funcionalidades">Funcionalidades</a></li>
-                <li><a href="#screenshots">Screenshots</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-            </ul>
-        </nav>
-    </div>
+
+<!-- HEADER -->
+<header>
+    <nav>
+        <div class="logo">SMARTSPACE</div>
+        <ul>
+            <li><a href="#home">Inicio</a></li>
+            <li><a href="#about">Nosotros</a></li>
+            <li><a href="#services">Servicios</a></li>
+            <li><a href="#contact">Contáctanos</a></li>
+            <li><a href="login.html" class="btn-login">Acceder</a></li>
+        </ul>
+    </nav>
 </header>
 
-<!-- Hero -->
-<section id="inicio" class="hero fade-in">
-    <div class="container hero-content">
-        <div class="hero-text">
-            <h2>Smartspace es tu aliado en la tarea de idear nuevos espacios</h2>
-            <p>Porque te mereces vivir como te guste.</p>
-            <a href="#funcionalidades" class="btn-primary">Diseña tu mueble</a>
+<!-- HERO -->
+<main>
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Diseña, optimiza y vive tu espacio inteligente</h1>
+            <p class="hero-subtitle">
+                Smartspace te permite planificar, visualizar y mejorar tus ambientes con inteligencia artificial.
+            </p>
+            <a href="#services" class="btn">Explora las soluciones</a>
         </div>
-        <div class="hero-image">
-            <!-- 🖼️ Espacio para imagen -->
-            <img src="images/hero-placeholder.png" alt="Diseño de interiores Smartspace">
-        </div>
-    </div>
-</section>
+    </section>
 
-<!-- Funcionalidades -->
-<section id="funcionalidades" class="features fade-in">
-    <div class="container">
-        <h2>Funcionalidades Principales</h2>
-        <div class="cards">
-            <div class="card">
-                <h3>Diseño Personalizado</h3>
-                <p>Crea y ajusta tus muebles de acuerdo con tu espacio e inspiración.</p>
-            </div>
-            <div class="card">
-                <h3>Gestión de Portafolio</h3>
-                <p>Organiza tus ideas y proyectos de manera práctica y visual.</p>
-            </div>
-            <div class="card">
-                <h3>Herramientas Interactivas</h3>
-                <p>Explora módulos para experimentar con estilos, colores y materiales.</p>
+    <!-- ABOUT -->
+    <section id="about" class="about">
+        <h2 class="about-section-title">Sobre Nosotros</h2>
+        <div class="about-layout">
+            <img src="images/hero-placeholder.png" alt="Equipo Smartspace" class="about-img">
+            <div class="about-content">
+                <h3>Nuestra Visión</h3>
+                <h1>Transformamos la manera en que diseñamos y habitamos los espacios</h1>
+                <p>
+                    En Smartspace desarrollamos soluciones innovadoras que combinan diseño, automatización y tecnología
+                    inteligente para optimizar cada rincón.
+                </p>
+                <p>
+                    Creemos que cada espacio tiene potencial para volverse más eficiente. Desde la planificación hasta la
+                    simulación, ayudamos a visualizar y experimentar tu entorno antes de hacerlo realidad.
+                </p>
+                <a href="#services" class="btn">Ver más</a>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- Screenshots -->
-<section id="screenshots" class="screens fade-in">
-    <div class="container">
-        <h2>Explora Smartspace</h2>
-        <p>Descubre cómo funciona nuestra app a través de imágenes o un video demo.</p>
-        <div class="image-gallery">
-            <!-- 🖼️ Espacio para screenshots -->
-            <img src="images/placeholder1.png" alt="Pantalla 1">
-            <img src="images/placeholder2.png" alt="Pantalla 2">
-            <img src="images/placeholder3.png" alt="Pantalla 3">
+    <!-- SERVICES -->
+    <section id="services" class="features">
+        <h1>Nuestras Soluciones</h1>
+        <p>Smartspace ofrece herramientas impulsadas por IA para redefinir tus espacios.</p>
+
+        <div class="feature-cards">
+
+            <div class="feature-card">
+                <h3>Diseño Asistido por IA</h3>
+                <p>Genera y optimiza planos personalizados con IA.</p>
+                <img src="images/placeholder1.png" alt="Diseño asistido" class="feature-img">
+            </div>
+
+            <div class="feature-card">
+                <h3>Simulación 3D Interactiva</h3>
+                <p>Visualiza tus ambientes en 3D antes de construirlos.</p>
+                <img src="images/placeholder2.png" alt="Simulación 3D" class="feature-img">
+            </div>
+
+            <div class="feature-card">
+                <h3>Automatización del Hogar</h3>
+                <p>Controla luces, temperatura y dispositivos inteligentemente.</p>
+                <img src="images/placeholder3.png" alt="Automatización" class="feature-img">
+            </div>
+
+            <div class="feature-card">
+                <h3>Análisis Energético Inteligente</h3>
+                <p>Reduce costos con análisis predictivo energético.</p>
+                <img src="images/hero-placeholder.png" alt="Eficiencia energética" class="feature-img">
+            </div>
+
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- CTA Final -->
-<section class="cta fade-in">
-    <div class="container">
-        <h2>Crea, diseña y transforma tus espacios con Smartspace</h2>
-        <a href="#contacto" class="btn-secondary">Explora herramientas</a>
-    </div>
-</section>
+    <!-- CONTACT -->
+    <section id="contact" class="contact">
+        <h2>Contáctanos</h2>
+        <div class="contact-layout">
+            <div class="contact-info">
+                <p class="diagonal-text">
+                    ¿Tienes un proyecto o idea? ¡Hablemos!
+                </p>
+                <p>
+                    Nuestro equipo está listo para transformar tus espacios utilizando inteligencia artificial.
+                </p>
+                <br>
+                <p><strong>Email:</strong> contacto@smartspace.com</p>
 
-<!-- Footer -->
-<footer id="contacto" class="footer">
-    <div class="container footer-content">
-        <p>📧 Contacto: <a href="mailto:info@smartspace.com">info@smartspace.com</a></p>
-        <p>
-            🌐 Síguenos:
-            <a href="https://www.instagram.com/smartspace_app" target="_blank">Instagram</a> |
-            <a href="https://www.facebook.com/smartspaceapp" target="_blank">Facebook</a>
-        </p>
-        <p>© 2025 Smartspace. Todos los derechos reservados.</p>
-    </div>
+                <br>
+                <p><strong>Síguenos:</strong></p>
+                <div class="social-icons">
+                    <a href="#"><img src="images/placeholder1.png" class="social-img"></a>
+                    <a href="#"><img src="images/placeholder2.png" class="social-img"></a>
+                    <a href="#"><img src="images/placeholder3.png" class="social-img"></a>
+                </div>
+            </div>
+
+            <div class="login-form2">
+                <form action="mailto:contacto@smartspace.com" method="POST" enctype="text/plain">
+                    <input class="input" type="text" placeholder="Nombre" name="name" required>
+                    <input class="input" type="email" placeholder="Correo electrónico" name="email" required>
+                    <input class="input" type="text" placeholder="Asunto" name="subject" required>
+                    <textarea placeholder="Mensaje" name="message" required></textarea>
+                    <button type="submit" class="btn1">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- FOOTER -->
+<footer>
+    <p>&copy; 2025 Smartspace. Todos los derechos reservados.</p>
 </footer>
 
-<script>
-    // Activar animación fade-in al hacer scroll
-    const fadeElements = document.querySelectorAll('.fade-in');
-    const appearOptions = { threshold: 0.2 };
+<!-- JS CORRECTO -->
+<script src="scripts/script.js"></script>
 
-    const appearOnScroll = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('appear');
-        observer.unobserve(entry.target);
-      });
-    }, appearOptions);
-
-    fadeElements.forEach(el => appearOnScroll.observe(el));
-</script>
 </body>
 </html>
