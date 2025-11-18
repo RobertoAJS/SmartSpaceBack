@@ -1,21 +1,16 @@
 package pe.edu.smartspace.dtos;
 
+import pe.edu.smartspace.entities.Diseno;
+import pe.edu.smartspace.entities.Usuario;
+
 import java.time.LocalDate;
 
 public class ComentarioDTO {
     private Long idComentario;
-    private Long idDiseno;
-    private Long idUsuario;
+    private Diseno diseno;
+    private Usuario usuario;
     private String textoComentario;
     private LocalDate fecha;
-
-    public LocalDate getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
-    }
 
     public Long getIdComentario() {
         return idComentario;
@@ -25,20 +20,20 @@ public class ComentarioDTO {
         this.idComentario = idComentario;
     }
 
-    public Long getIdDiseno() {
-        return idDiseno;
+    public Diseno getDiseno() {
+        return diseno;
     }
 
-    public void setIdDiseno(Long idDiseno) {
-        this.idDiseno = idDiseno;
+    public void setDiseno(Diseno diseno) {
+        this.diseno = diseno;
     }
 
-    public Long getIdUsuario() {
-        return idUsuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setIdUsuario(Long idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public String getTextoComentario() {
@@ -47,5 +42,13 @@ public class ComentarioDTO {
 
     public void setTextoComentario(String textoComentario) {
         this.textoComentario = textoComentario;
+    }
+
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
     }
 }

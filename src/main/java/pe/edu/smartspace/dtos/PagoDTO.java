@@ -1,37 +1,23 @@
 package pe.edu.smartspace.dtos;
 
+import pe.edu.smartspace.entities.Usuario;
+
 import java.time.LocalDateTime;
 
 public class PagoDTO {
 
-    private Long id;
+    private Long idPago;
     private Double monto;
     private String metodoPago;
     private LocalDateTime fechaPago;
-    private Long usuarioId;
+    private Usuario usuario;
 
-    public LocalDateTime getFechaPago() {
-        return fechaPago;
+    public Long getIdPago() {
+        return idPago;
     }
 
-    public void setFechaPago(LocalDateTime fechaPago) {
-        this.fechaPago = fechaPago;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getMetodoPago() {
-        return metodoPago;
-    }
-
-    public void setMetodoPago(String metodoPago) {
-        this.metodoPago = metodoPago;
+    public void setIdPago(Long idPago) {
+        this.idPago = idPago;
     }
 
     public Double getMonto() {
@@ -42,11 +28,27 @@ public class PagoDTO {
         this.monto = monto;
     }
 
-    public Long getUsuarioId() {
-        return usuarioId;
+    public String getMetodoPago() {
+        return metodoPago;
     }
 
-    public void setUsuarioId(Long usuarioId) {
-        this.usuarioId = usuarioId;
+    public void setMetodoPago(String metodoPago) {
+        this.metodoPago = metodoPago;
+    }
+
+    public LocalDateTime getFechaPago() {
+        return fechaPago;
+    }
+
+    public void setFechaPago(LocalDateTime fechaPago) {
+        this.fechaPago = fechaPago;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

@@ -1,12 +1,13 @@
 package pe.edu.smartspace.servicesinterfaces;
 
-import pe.edu.smartspace.dtos.IntegracionAPIDTO;
+import pe.edu.smartspace.entities.IntegracionAPI;
+
 import java.util.List;
 
 public interface IIntegracionAPIService {
-    IntegracionAPIDTO crearIntegracion(IntegracionAPIDTO dto);
-    IntegracionAPIDTO obtenerIntegracionPorId(Long id);
-    List<IntegracionAPIDTO> listarIntegraciones();
-    IntegracionAPIDTO actualizarIntegracion(Long id, IntegracionAPIDTO dto);
-    void eliminarIntegracion(Long id);
+    List<IntegracionAPI> listar();
+    void registrar(IntegracionAPI i);
+    IntegracionAPI buscarPorId(Long id);
+    void modificar(IntegracionAPI i);
+    void eliminar(Long id);
 }

@@ -4,7 +4,10 @@ import pe.edu.smartspace.entities.Usuario;
 import java.util.List;
 
 public interface IUsuarioService {
-    Usuario registrarUsuario(Usuario usuario);
-    List<Usuario> listarUsuarios();
+    List<Usuario> listar();
+    void registrar(Usuario u);
     Usuario buscarPorId(Long id);
+    void modificar(Usuario u);
+    void eliminar(Long id);
+    Usuario buscarPorUsername(String username);
 }

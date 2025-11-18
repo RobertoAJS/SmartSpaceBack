@@ -2,47 +2,56 @@ package pe.edu.smartspace.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "favoritos")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class Favorito {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idFavorito;
 
     // Relación con Usuario
     @ManyToOne
-    @JoinColumn(name = "usuario_id", nullable = false)
+    @JoinColumn(name = "idUsuario", nullable = false)
     private Usuario usuario;
 
     // Relación con Mueble (producto favorito)
     @ManyToOne
-    @JoinColumn(name = "mueble_id", nullable = false)
+    @JoinColumn(name = "idMueble", nullable = false)
     private Mueble mueble;
 
+    @Column(name = "fecha_agregado", nullable = false)
     private LocalDateTime fechaAgregado;
 
-    public LocalDateTime getFechaAgregado() {
-        return fechaAgregado;
+
+    public Favorito() {
     }
 
-    public void setFechaAgregado(LocalDateTime fechaAgregado) {
+    public Favorito(Long idFavorito, Usuario usuario, Mueble mueble, LocalDateTime fechaAgregado) {
+        this.idFavorito = idFavorito;
+        this.usuario = usuario;
+        this.mueble = mueble;
         this.fechaAgregado = fechaAgregado;
     }
 
-    public Long getId() {
-        return id;
+    public Long getIdFavorito() {
+        return idFavorito;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdFavorito(Long idFavorito) {
+        this.idFavorito = idFavorito;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public Mueble getMueble() {
@@ -53,11 +62,11 @@ public class Favorito {
         this.mueble = mueble;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public LocalDateTime getFechaAgregado() {
+        return fechaAgregado;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setFechaAgregado(LocalDateTime fechaAgregado) {
+        this.fechaAgregado = fechaAgregado;
     }
 }

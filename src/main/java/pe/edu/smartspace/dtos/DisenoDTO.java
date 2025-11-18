@@ -1,45 +1,24 @@
 package pe.edu.smartspace.dtos;
 
+import pe.edu.smartspace.entities.Usuario;
+
 import java.util.Date;
 
 public class DisenoDTO {
 
-    private Long id;
+    private Long idDiseno;
     private String nombre;
     private Date fechaCreacion;
     private String estado;
-    private Long idUsuario;
+    private Usuario usuario;
 
-    public String getEstado() {
-        return estado;
+
+    public Long getIdDiseno() {
+        return idDiseno;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public Date getFechaCreacion() {
-        return fechaCreacion;
-    }
-
-    public void setFechaCreacion(Date fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(Long idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setIdDiseno(Long idDiseno) {
+        this.idDiseno = idDiseno;
     }
 
     public String getNombre() {
@@ -50,5 +29,27 @@ public class DisenoDTO {
         this.nombre = nombre;
     }
 
-    // para relacionarlo con Usuario
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 }

@@ -1,5 +1,7 @@
 package pe.edu.smartspace.servicesimplements;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pe.edu.smartspace.entities.Usuario;
 import pe.edu.smartspace.repositories.IUsuarioRepository;
@@ -10,23 +12,58 @@ import java.util.List;
 @Service
 public class UsuarioServiceImpl implements IUsuarioService {
 
-    private final IUsuarioRepository usuarioRepository;
 
-    public UsuarioServiceImpl(IUsuarioRepository usuarioRepository) {
-        this.usuarioRepository = usuarioRepository;
+    @Autowired
+    private IUsuarioRepository uR;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Override
+    public List<Usuario> listar() {
+        return uR.findAll();
     }
 
     @Override
-    public Usuario registrarUsuario(Usuario usuario) { return usuarioRepository.save(usuario); }
+    public void registrar(Usuario u) {
 
+        // 1. Validar que el username no exista
+        if (uR.buscarUsername(u.getUsername()) > 0) {
+            throw new RuntimeException("El username ya existe: " + u.getUsername());
+        }
 
-    @Override
-    public List<Usuario> listarUsuarios() {
-        return usuarioRepository.findAll();
+        // 2. Habilitar usuario por defecto
+        u.setStatusUsuario(true);
+
+        // 3. Encriptar password con BCrypt
+        u.setPassword(passwordEncoder.encode(u.getPassword()));
+
+        // 4. Guardar usuario
+        Usuario usuarioGuardado = uR.save(u);
+
+        // 5. Insertar rol por defecto en la tabla roles
+        //    Aquí puedes usar "USER" y luego "ADMIN" para otros usuarios
+        uR.insRol("USER", usuarioGuardado.getIdUsuario());
     }
+
 
     @Override
     public Usuario buscarPorId(Long id) {
-        return usuarioRepository.findById(id).orElse(null);
+        return uR.findById(id).orElse(null);
+    }
+
+    @Override
+    public void modificar(Usuario u) {
+        uR.save(u);
+    }
+
+    @Override
+    public void eliminar(Long id) {
+        uR.deleteById(id);
+    }
+
+    @Override
+    public Usuario buscarPorUsername(String username) {
+        return uR.findOneByUsername(username);
     }
 }

@@ -4,7 +4,9 @@ import pe.edu.smartspace.entities.Diseno;
 import java.util.List;
 
 public interface IDisenoService {
-    Diseno registrarDiseno(Diseno diseno, Long idUsuario);
-    List<Diseno> listarDisenos();
+    List<Diseno> listar();
+    void registrar(Diseno d);
     Diseno buscarPorId(Long id);
+    void modificar(Diseno d);
+    void eliminar(Long id);
 }

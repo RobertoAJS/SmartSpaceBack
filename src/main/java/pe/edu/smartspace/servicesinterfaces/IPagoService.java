@@ -4,8 +4,9 @@ import pe.edu.smartspace.entities.Pago;
 import java.util.List;
 
 public interface IPagoService {
-    Pago registrarPago(Pago pago);
-    List<Pago> listarPagos();
+    List<Pago> listar();
+    void registrar(Pago p);
     Pago buscarPorId(Long id);
-    void eliminarPago(Long id);
+    void modificar(Pago p);
+    void eliminar(Long id);
 }

@@ -9,31 +9,44 @@ import java.time.LocalDateTime;
 @Table(name = "notificaciones")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class Notificacion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idNotificacion;
 
+    @Column(name = "mensaje", length = 250, nullable = false)
     private String mensaje;
 
+    @Column(name = "leido", nullable = false)
     private Boolean leido = false;
 
+    @Column(name = "fecha_envio")
     private LocalDateTime fechaEnvio;
 
     // Relación con Usuario
     @ManyToOne
-    @JoinColumn(name = "usuario_id", nullable = false)
+    @JoinColumn(name = "idUsuario", nullable = false)
     private Usuario usuario;
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Notificacion() {
     }
 
-    public void setUsuario(Usuario usuario) {
+    public Notificacion(Long idNotificacion, String mensaje, Boolean leido, LocalDateTime fechaEnvio, Usuario usuario) {
+        this.idNotificacion = idNotificacion;
+        this.mensaje = mensaje;
+        this.leido = leido;
+        this.fechaEnvio = fechaEnvio;
         this.usuario = usuario;
+    }
+
+    public Long getIdNotificacion() {
+        return idNotificacion;
+    }
+
+    public void setIdNotificacion(Long idNotificacion) {
+        this.idNotificacion = idNotificacion;
     }
 
     public String getMensaje() {
@@ -52,19 +65,19 @@ public class Notificacion {
         this.leido = leido;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public LocalDateTime getFechaEnvio() {
         return fechaEnvio;
     }
 
     public void setFechaEnvio(LocalDateTime fechaEnvio) {
         this.fechaEnvio = fechaEnvio;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

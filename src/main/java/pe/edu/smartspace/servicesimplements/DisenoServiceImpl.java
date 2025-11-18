@@ -1,5 +1,6 @@
 package pe.edu.smartspace.servicesimplements;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pe.edu.smartspace.entities.Diseno;
 import pe.edu.smartspace.entities.Usuario;
@@ -12,28 +13,32 @@ import java.util.List;
 @Service
 public class DisenoServiceImpl implements IDisenoService {
 
-    private final IDisenoRepository disenoRepository;
-    private final IUsuarioRepository usuarioRepository;
 
-    public DisenoServiceImpl(IDisenoRepository disenoRepository, IUsuarioRepository usuarioRepository) {
-        this.disenoRepository = disenoRepository;
-        this.usuarioRepository = usuarioRepository;
+    @Autowired
+    private IDisenoRepository dR;
+
+    @Override
+    public List<Diseno> listar() {
+        return dR.findAll();
     }
 
     @Override
-    public Diseno registrarDiseno(Diseno diseno, Long idUsuario) {
-        Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);
-        diseno.setUsuario(usuario);
-        return disenoRepository.save(diseno);
-    }
-
-    @Override
-    public List<Diseno> listarDisenos() {
-        return disenoRepository.findAll();
+    public void registrar(Diseno d) {
+        dR.save(d);
     }
 
     @Override
     public Diseno buscarPorId(Long id) {
-        return disenoRepository.findById(id).orElse(null);
+        return dR.findById(id).orElse(null);
+    }
+
+    @Override
+    public void modificar(Diseno d) {
+        dR.save(d);
+    }
+
+    @Override
+    public void eliminar(Long id) {
+        dR.deleteById(id);
     }
 }

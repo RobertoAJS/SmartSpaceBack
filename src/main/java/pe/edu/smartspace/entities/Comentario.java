@@ -14,15 +14,14 @@ public class Comentario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_comentario")
     private Long idComentario;
 
     @ManyToOne
-    @JoinColumn(name = "id_diseno", nullable = false)
+    @JoinColumn(name = "idDiseno", nullable = false)
     private Diseno diseno;
 
     @ManyToOne
-    @JoinColumn(name = "id_usuario", nullable = false)
+    @JoinColumn(name = "idUsuario", nullable = false)
     private Usuario usuario;
 
     @Column(name = "texto_comentario", columnDefinition = "TEXT", nullable = false)
@@ -30,6 +29,15 @@ public class Comentario {
 
     @Column(name = "fecha")
     private LocalDate fecha;
+
+
+    public Long getIdComentario() {
+        return idComentario;
+    }
+
+    public void setIdComentario(Long idComentario) {
+        this.idComentario = idComentario;
+    }
 
     public Diseno getDiseno() {
         return diseno;
@@ -39,20 +47,12 @@ public class Comentario {
         this.diseno = diseno;
     }
 
-    public LocalDate getFecha() {
-        return fecha;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
-    }
-
-    public Long getIdComentario() {
-        return idComentario;
-    }
-
-    public void setIdComentario(Long idComentario) {
-        this.idComentario = idComentario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public String getTextoComentario() {
@@ -63,11 +63,11 @@ public class Comentario {
         this.textoComentario = textoComentario;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public LocalDate getFecha() {
+        return fecha;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
     }
 }

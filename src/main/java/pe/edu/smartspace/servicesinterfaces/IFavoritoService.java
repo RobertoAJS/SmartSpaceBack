@@ -4,9 +4,10 @@ import pe.edu.smartspace.entities.Favorito;
 import java.util.List;
 
 public interface IFavoritoService {
-    Favorito registrarFavorito(Favorito favorito);
-    List<Favorito> listarFavoritos();
+    List<Favorito> listar();
+    void registrar(Favorito f);
     Favorito buscarPorId(Long id);
-    void eliminarFavorito(Long id);
+    void modificar(Favorito f);
+    void eliminar(Long id);
 }
 

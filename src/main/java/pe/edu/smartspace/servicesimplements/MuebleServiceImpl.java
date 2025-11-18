@@ -1,5 +1,6 @@
 package pe.edu.smartspace.servicesimplements;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pe.edu.smartspace.entities.Mueble;
 import pe.edu.smartspace.repositories.IMuebleRepository;
@@ -10,24 +11,32 @@ import java.util.List;
 @Service
 public class MuebleServiceImpl implements IMuebleService {
 
-    private final IMuebleRepository muebleRepository;
 
-    public MuebleServiceImpl(IMuebleRepository muebleRepository) {
-        this.muebleRepository = muebleRepository;
+    @Autowired
+    private IMuebleRepository mR;
+
+    @Override
+    public List<Mueble> listar() {
+        return mR.findAll();
     }
 
     @Override
-    public Mueble registrarMueble(Mueble mueble) {
-        return muebleRepository.save(mueble);
-    }
-
-    @Override
-    public List<Mueble> listarMuebles() {
-        return muebleRepository.findAll();
+    public void registrar(Mueble mueble) {
+        mR.save(mueble);
     }
 
     @Override
     public Mueble buscarPorId(Long id) {
-        return muebleRepository.findById(id).orElse(null);
+        return mR.findById(id).orElse(null);
+    }
+
+    @Override
+    public void modificar(Mueble mueble) {
+        mR.save(mueble);
+    }
+
+    @Override
+    public void eliminar(Long id) {
+        mR.deleteById(id);
     }
 }

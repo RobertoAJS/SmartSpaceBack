@@ -9,8 +9,6 @@ import java.time.LocalDate;
 @Table(name = "versiones_disenos")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class VersionDiseno {
 
     @Id
@@ -18,31 +16,37 @@ public class VersionDiseno {
     private Long idVersion;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_diseno", nullable = false)
+    @JoinColumn(name = "idDiseno", nullable = false)
     private Diseno diseno;
 
+    @Column(name = "fecha")
     private LocalDate fecha;
 
-    @Column(length = 255)
+    @Column(name = "archivoModelo", length = 260)
     private String archivoModelo;
 
-    @Column(length = 255)
+    @Column(name = "comentarios", length = 260)
     private String comentarios;
 
-    public String getArchivoModelo() {
-        return archivoModelo;
+
+    public VersionDiseno() {
     }
 
-    public void setArchivoModelo(String archivoModelo) {
+
+    public VersionDiseno(Long idVersion, Diseno diseno, LocalDate fecha, String archivoModelo, String comentarios) {
+        this.idVersion = idVersion;
+        this.diseno = diseno;
+        this.fecha = fecha;
         this.archivoModelo = archivoModelo;
-    }
-
-    public String getComentarios() {
-        return comentarios;
-    }
-
-    public void setComentarios(String comentarios) {
         this.comentarios = comentarios;
+    }
+
+    public Long getIdVersion() {
+        return idVersion;
+    }
+
+    public void setIdVersion(Long idVersion) {
+        this.idVersion = idVersion;
     }
 
     public Diseno getDiseno() {
@@ -61,11 +65,19 @@ public class VersionDiseno {
         this.fecha = fecha;
     }
 
-    public Long getIdVersion() {
-        return idVersion;
+    public String getArchivoModelo() {
+        return archivoModelo;
     }
 
-    public void setIdVersion(Long idVersion) {
-        this.idVersion = idVersion;
+    public void setArchivoModelo(String archivoModelo) {
+        this.archivoModelo = archivoModelo;
+    }
+
+    public String getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(String comentarios) {
+        this.comentarios = comentarios;
     }
 }

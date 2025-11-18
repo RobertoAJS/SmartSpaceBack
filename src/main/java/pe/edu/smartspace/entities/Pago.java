@@ -9,39 +9,53 @@ import java.time.LocalDateTime;
 @Table(name = "pagos")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class Pago {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idPago;
 
+    @Column(name = "monto", nullable = false)
     private Double monto;
 
+    @Column(name = "metodo_pago", length = 50, nullable = false)
     private String metodoPago;
 
+    @Column(name = "fecha_pago")
     private LocalDateTime fechaPago;
 
     // Relación con Usuario
     @ManyToOne
-    @JoinColumn(name = "usuario_id", nullable = false)
+    @JoinColumn(name = "idUsuario", nullable = false)
     private Usuario usuario;
 
-    public LocalDateTime getFechaPago() {
-        return fechaPago;
+
+    public Pago() {
     }
 
-    public void setFechaPago(LocalDateTime fechaPago) {
+    public Pago(Long idPago, Double monto, String metodoPago, LocalDateTime fechaPago, Usuario usuario) {
+        this.idPago = idPago;
+        this.monto = monto;
+        this.metodoPago = metodoPago;
         this.fechaPago = fechaPago;
+        this.usuario = usuario;
     }
 
-    public Long getId() {
-        return id;
+    public Long getIdPago() {
+        return idPago;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdPago(Long idPago) {
+        this.idPago = idPago;
+    }
+
+    public Double getMonto() {
+        return monto;
+    }
+
+    public void setMonto(Double monto) {
+        this.monto = monto;
     }
 
     public String getMetodoPago() {
@@ -52,12 +66,12 @@ public class Pago {
         this.metodoPago = metodoPago;
     }
 
-    public Double getMonto() {
-        return monto;
+    public LocalDateTime getFechaPago() {
+        return fechaPago;
     }
 
-    public void setMonto(Double monto) {
-        this.monto = monto;
+    public void setFechaPago(LocalDateTime fechaPago) {
+        this.fechaPago = fechaPago;
     }
 
     public Usuario getUsuario() {

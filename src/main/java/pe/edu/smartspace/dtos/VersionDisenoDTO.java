@@ -1,14 +1,40 @@
 package pe.edu.smartspace.dtos;
 
+import pe.edu.smartspace.entities.Diseno;
+
 import java.time.LocalDate;
 
 public class VersionDisenoDTO {
 
     private Long idVersion;
-    private Long id; // relación con Diseño
+    private Diseno diseno; // relación con Diseño
     private LocalDate fecha;
     private String archivoModelo;
     private String comentarios;
+
+    public Long getIdVersion() {
+        return idVersion;
+    }
+
+    public void setIdVersion(Long idVersion) {
+        this.idVersion = idVersion;
+    }
+
+    public Diseno getDiseno() {
+        return diseno;
+    }
+
+    public void setDiseno(Diseno diseno) {
+        this.diseno = diseno;
+    }
+
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
 
     public String getArchivoModelo() {
         return archivoModelo;
@@ -24,29 +50,5 @@ public class VersionDisenoDTO {
 
     public void setComentarios(String comentarios) {
         this.comentarios = comentarios;
-    }
-
-    public LocalDate getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
-    }
-
-    public Long getIdDiseno() {
-        return id;
-    }
-
-    public void setIdDiseno(Long idDiseno) {
-        this.id = idDiseno;
-    }
-
-    public Long getIdVersion() {
-        return idVersion;
-    }
-
-    public void setIdVersion(Long idVersion) {
-        this.idVersion = idVersion;
     }
 }

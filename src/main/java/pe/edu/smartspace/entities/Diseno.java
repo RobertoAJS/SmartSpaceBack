@@ -7,31 +7,53 @@ import java.util.Date;
 @Entity
 @Table(name = "disenos")
 @Getter @Setter
-@NoArgsConstructor @AllArgsConstructor
 public class Diseno {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idDiseno;
 
+    @Column(name = "nombre", length = 100, nullable = false)
     private String nombre;
 
     @Temporal(TemporalType.DATE)
+    @Column(name = "fecha_creacion")
     private Date fechaCreacion;
 
+    @Column(name = "estado", length = 20)
     private String estado;
 
     // Relación con usuario
     @ManyToOne
-    @JoinColumn(name = "usuario_id")
+    @JoinColumn(name = "idUsuario", nullable = false)
     private Usuario usuario;
 
-    public String getEstado() {
-        return estado;
+
+    public Diseno() {
     }
 
-    public void setEstado(String estado) {
+    public Diseno(Long idDiseno, String nombre, Date fechaCreacion, String estado, Usuario usuario) {
+        this.idDiseno = idDiseno;
+        this.nombre = nombre;
+        this.fechaCreacion = fechaCreacion;
         this.estado = estado;
+        this.usuario = usuario;
+    }
+
+    public Long getIdDiseno() {
+        return idDiseno;
+    }
+
+    public void setIdDiseno(Long idDiseno) {
+        this.idDiseno = idDiseno;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public Date getFechaCreacion() {
@@ -42,20 +64,12 @@ public class Diseno {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public Long getId() {
-        return id;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public Usuario getUsuario() {

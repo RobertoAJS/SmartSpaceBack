@@ -1,11 +1,13 @@
 package pe.edu.smartspace.servicesinterfaces;
 
-import pe.edu.smartspace.dtos.ComentarioDTO;
+import pe.edu.smartspace.entities.Comentario;
+
 import java.util.List;
 
 public interface IComentarioService {
-    ComentarioDTO registrarComentario(ComentarioDTO comentarioDTO);
-    List<ComentarioDTO> listarComentarios();
-    ComentarioDTO buscarPorId(Long id);
+    List<Comentario> listar();
+    void registrar(Comentario c);
+    Comentario buscarPorId(Long id);
+    void modificar(Comentario c);
     void eliminar(Long id);
 }

@@ -1,11 +1,14 @@
 package pe.edu.smartspace.controllers;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.smartspace.dtos.FavoritoDTO;
 import pe.edu.smartspace.entities.Favorito;
 import pe.edu.smartspace.entities.Mueble;
 import pe.edu.smartspace.entities.Usuario;
-import pe.edu.smartspace.mappers.FavoritoMapper;
 import pe.edu.smartspace.servicesinterfaces.IFavoritoService;
 import pe.edu.smartspace.servicesinterfaces.IUsuarioService;
 import pe.edu.smartspace.servicesinterfaces.IMuebleService;
@@ -17,45 +20,61 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/favoritos")
 public class FavoritoController {
 
-    private final IFavoritoService favoritoService;
-    private final IUsuarioService usuarioService;
-    private final IMuebleService muebleService;
-
-    public FavoritoController(
-            IFavoritoService favoritoService,
-            IUsuarioService usuarioService,
-            IMuebleService muebleService
-    ) {
-        this.favoritoService = favoritoService;
-        this.usuarioService = usuarioService;
-        this.muebleService = muebleService;
-    }
-
-    @PostMapping
-    public FavoritoDTO registrar(@RequestBody FavoritoDTO dto) {
-        Usuario usuario = usuarioService.buscarPorId(dto.getUsuarioId());
-        Mueble mueble = muebleService.buscarPorId(dto.getMuebleId());
-
-        Favorito favorito = FavoritoMapper.toEntity(dto, usuario, mueble);
-        return FavoritoMapper.toDTO(favoritoService.registrarFavorito(favorito));
-    }
+    @Autowired
+    private IFavoritoService service;
 
     @GetMapping
     public List<FavoritoDTO> listar() {
-        return favoritoService.listarFavoritos()
-                .stream()
-                .map(FavoritoMapper::toDTO)
-                .collect(Collectors.toList());
+        return service.listar().stream().map(x -> {
+            ModelMapper m = new ModelMapper();
+            return m.map(x, FavoritoDTO.class);
+        }).collect(Collectors.toList());
+    }
+
+    @PostMapping
+    public void registrar(@RequestBody FavoritoDTO dto) {
+        ModelMapper m = new ModelMapper();
+        Favorito f = m.map(dto, Favorito.class);
+        service.registrar(f);
     }
 
     @GetMapping("/{id}")
-    public FavoritoDTO buscar(@PathVariable Long id) {
-        Favorito favorito = favoritoService.buscarPorId(id);
-        return favorito != null ? FavoritoMapper.toDTO(favorito) : null;
+    public ResponseEntity<?> listarId(@PathVariable("id") Long id) {
+        Favorito f = service.buscarPorId(id);
+        if (f == null) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body("No existe un favorito con el ID: " + id);
+        }
+        ModelMapper m = new ModelMapper();
+        FavoritoDTO dto = m.map(f, FavoritoDTO.class);
+        return ResponseEntity.ok(dto);
+    }
+
+    @PutMapping
+    public ResponseEntity<String> modificar(@RequestBody FavoritoDTO dto) {
+        ModelMapper m = new ModelMapper();
+        Favorito f = m.map(dto, Favorito.class);
+
+        Favorito existente = service.buscarPorId(f.getIdFavorito());
+        if (existente == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No se puede modificar. No existe un favorito con el ID: " + f.getIdFavorito());
+        }
+
+        service.modificar(f);
+        return ResponseEntity.ok("Favorito con ID " + f.getIdFavorito() + " modificado correctamente.");
     }
 
     @DeleteMapping("/{id}")
-    public void eliminar(@PathVariable Long id) {
-        favoritoService.eliminarFavorito(id);
+    public ResponseEntity<String> eliminar(@PathVariable("id") Long id) {
+        Favorito f = service.buscarPorId(id);
+        if (f == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No existe un favorito con el ID: " + id);
+        }
+        service.eliminar(id);
+        return ResponseEntity.ok("Favorito con ID " + id + " eliminado correctamente.");
     }
+
 }

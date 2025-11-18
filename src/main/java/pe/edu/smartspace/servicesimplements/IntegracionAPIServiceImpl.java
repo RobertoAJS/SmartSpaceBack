@@ -6,7 +6,7 @@ import pe.edu.smartspace.entities.IntegracionAPI;
 import pe.edu.smartspace.repositories.IIntegracionAPIRepository;
 import pe.edu.smartspace.servicesinterfaces.IIntegracionAPIService;
 import pe.edu.smartspace.dtos.IntegracionAPIDTO;
-import pe.edu.smartspace.mappers.IntegracionAPIMapper;
+
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,51 +14,32 @@ import java.util.stream.Collectors;
 @Service
 public class IntegracionAPIServiceImpl implements IIntegracionAPIService {
 
+
     @Autowired
-    private IIntegracionAPIRepository repository;
+    private IIntegracionAPIRepository iR;
 
     @Override
-    public IntegracionAPIDTO crearIntegracion(IntegracionAPIDTO dto) {
-        IntegracionAPI entity = IntegracionAPIMapper.toEntity(dto);
-        IntegracionAPI saved = repository.save(entity);
-        return IntegracionAPIMapper.toDTO(saved);
+    public List<IntegracionAPI> listar() {
+        return iR.findAll();
     }
 
     @Override
-    public IntegracionAPIDTO obtenerIntegracionPorId(Long id) {
-        IntegracionAPI entity = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Integración no encontrada"));
-        return IntegracionAPIMapper.toDTO(entity);
+    public void registrar(IntegracionAPI i) {
+        iR.save(i);
     }
 
     @Override
-    public List<IntegracionAPIDTO> listarIntegraciones() {
-        return repository.findAll().stream()
-                .map(IntegracionAPIMapper::toDTO)
-                .collect(Collectors.toList());
+    public IntegracionAPI buscarPorId(Long id) {
+        return iR.findById(id).orElse(null);
     }
 
     @Override
-    public IntegracionAPIDTO actualizarIntegracion(Long id, IntegracionAPIDTO dto) {
-        IntegracionAPI entity = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Integración no encontrada"));
-
-        entity.setTipoServicio(dto.getTipoServicio());
-        entity.setApiKey(dto.getApiKey());
-        entity.setEstado(dto.getEstado());
-        entity.setFechaCreacion(dto.getFechaCreacion());
-        if(dto.getUsuarioId() != null) {
-            pe.edu.smartspace.entities.Usuario usuario = new pe.edu.smartspace.entities.Usuario();
-            usuario.setId(dto.getUsuarioId());
-            entity.setUsuario(usuario);
-        }
-
-        IntegracionAPI updated = repository.save(entity);
-        return IntegracionAPIMapper.toDTO(updated);
+    public void modificar(IntegracionAPI i) {
+        iR.save(i);
     }
 
     @Override
-    public void eliminarIntegracion(Long id) {
-        repository.deleteById(id);
+    public void eliminar(Long id) {
+        iR.deleteById(id);
     }
 }

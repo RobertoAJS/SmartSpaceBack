@@ -2,7 +2,7 @@ package pe.edu.smartspace.dtos;
 
 public class MuebleDTO {
 
-    private Long id;
+    private Long idMueble;
     private String nombre;
     private String categoria;
     private String dimension;
@@ -10,6 +10,22 @@ public class MuebleDTO {
     private Double precio;
     private Boolean sostenibilidad;
     private String proveedor;
+
+    public Long getIdMueble() {
+        return idMueble;
+    }
+
+    public void setIdMueble(Long idMueble) {
+        this.idMueble = idMueble;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
     public String getCategoria() {
         return categoria;
@@ -35,22 +51,6 @@ public class MuebleDTO {
         this.estilo = estilo;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
     public Double getPrecio() {
         return precio;
     }
@@ -59,19 +59,19 @@ public class MuebleDTO {
         this.precio = precio;
     }
 
-    public String getProveedor() {
-        return proveedor;
-    }
-
-    public void setProveedor(String proveedor) {
-        this.proveedor = proveedor;
-    }
-
     public Boolean getSostenibilidad() {
         return sostenibilidad;
     }
 
     public void setSostenibilidad(Boolean sostenibilidad) {
         this.sostenibilidad = sostenibilidad;
+    }
+
+    public String getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(String proveedor) {
+        this.proveedor = proveedor;
     }
 }

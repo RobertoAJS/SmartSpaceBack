@@ -1,36 +1,39 @@
 package pe.edu.smartspace.dtos;
 
+import pe.edu.smartspace.entities.Mueble;
+import pe.edu.smartspace.entities.Usuario;
+
 import java.time.LocalDateTime;
 
 public class FavoritoDTO {
 
-    private Long id;
-    private Long usuarioId;
-    private Long muebleId;
+    private Long idFavorito;
+    private Usuario usuario;
+    private Mueble mueble;
     private LocalDateTime fechaAgregado;
 
-    public Long getId() {
-        return id;
+    public Long getIdFavorito() {
+        return idFavorito;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdFavorito(Long idFavorito) {
+        this.idFavorito = idFavorito;
     }
 
-    public Long getUsuarioId() {
-        return usuarioId;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setUsuarioId(Long usuarioId) {
-        this.usuarioId = usuarioId;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
-    public Long getMuebleId() {
-        return muebleId;
+    public Mueble getMueble() {
+        return mueble;
     }
 
-    public void setMuebleId(Long muebleId) {
-        this.muebleId = muebleId;
+    public void setMueble(Mueble mueble) {
+        this.mueble = mueble;
     }
 
     public LocalDateTime getFechaAgregado() {

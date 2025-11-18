@@ -1,37 +1,23 @@
 package pe.edu.smartspace.dtos;
 
+import pe.edu.smartspace.entities.Usuario;
+
 import java.time.LocalDateTime;
 
 public class NotificacionDTO {
 
-    private Long id;
+    private Long idNotificacion;
     private String mensaje;
     private Boolean leido;
     private LocalDateTime fechaEnvio;
-    private Long usuarioId;
+    private Usuario usuario;
 
-    public LocalDateTime getFechaEnvio() {
-        return fechaEnvio;
+    public Long getIdNotificacion() {
+        return idNotificacion;
     }
 
-    public void setFechaEnvio(LocalDateTime fechaEnvio) {
-        this.fechaEnvio = fechaEnvio;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Boolean getLeido() {
-        return leido;
-    }
-
-    public void setLeido(Boolean leido) {
-        this.leido = leido;
+    public void setIdNotificacion(Long idNotificacion) {
+        this.idNotificacion = idNotificacion;
     }
 
     public String getMensaje() {
@@ -42,11 +28,27 @@ public class NotificacionDTO {
         this.mensaje = mensaje;
     }
 
-    public Long getUsuarioId() {
-        return usuarioId;
+    public Boolean getLeido() {
+        return leido;
     }
 
-    public void setUsuarioId(Long usuarioId) {
-        this.usuarioId = usuarioId;
+    public void setLeido(Boolean leido) {
+        this.leido = leido;
+    }
+
+    public LocalDateTime getFechaEnvio() {
+        return fechaEnvio;
+    }
+
+    public void setFechaEnvio(LocalDateTime fechaEnvio) {
+        this.fechaEnvio = fechaEnvio;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }
