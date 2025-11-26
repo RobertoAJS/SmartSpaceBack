@@ -39,4 +39,9 @@ public class MuebleServiceImpl implements IMuebleService {
     public void eliminar(Long id) {
         mR.deleteById(id);
     }
+
+    @Override
+    public List<Mueble> buscarPorCategoria(String categoria) {
+        return mR.findByCategoria(categoria);
+    }
 }
