@@ -43,7 +43,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
         // 5. Insertar rol por defecto en la tabla roles
         //    Aquí puedes usar "USER" y luego "ADMIN" para otros usuarios
-        uR.insRol("USER", usuarioGuardado.getIdUsuario());
+        uR.insRol("CLIENTE", usuarioGuardado.getIdUsuario());
     }
 
 
