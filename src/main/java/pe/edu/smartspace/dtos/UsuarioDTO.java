@@ -5,7 +5,7 @@ public class UsuarioDTO {
     private Long idUsuario;
     private String nombre;
     private String email;
-    private String username;   // <--- Nuevo campo
+    private String username;
     private String password;
     private boolean statusUsuario;
 

@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface IMuebleRepository extends JpaRepository<Mueble, Long> {
     // Buscar por coincidencia de categoría (ignorando mayúsculas/minúsculas)
-    List<Mueble> findByCategoriaContainingIgnoreCase(String categoria);
+    List<Mueble> findByCategoria(String categoria);
 }

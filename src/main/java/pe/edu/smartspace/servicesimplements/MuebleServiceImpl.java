@@ -42,6 +42,6 @@ public class MuebleServiceImpl implements IMuebleService {
 
     @Override
     public List<Mueble> buscarPorCategoria(String categoria) {
-        return mR.findByCategoriaContainingIgnoreCase(categoria);
+        return mR.findByCategoria(categoria);
     }
 }
