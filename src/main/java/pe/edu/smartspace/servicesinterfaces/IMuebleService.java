@@ -9,4 +9,5 @@ public interface IMuebleService {
     Mueble buscarPorId(Long id);
     void modificar(Mueble m);
     void eliminar(Long id);
+    List<Mueble> buscarPorCategoria(String categoria);
 }

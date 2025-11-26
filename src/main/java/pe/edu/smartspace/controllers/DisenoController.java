@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.smartspace.dtos.DisenoDTO;
 import pe.edu.smartspace.entities.Diseno;
@@ -28,6 +29,7 @@ public class DisenoController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENTE')")
     public void registrar(@RequestBody DisenoDTO dto) {
         ModelMapper m = new ModelMapper();
         Diseno d = m.map(dto, Diseno.class);

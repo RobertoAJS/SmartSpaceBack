@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.smartspace.dtos.MuebleDTO;
 import pe.edu.smartspace.entities.Mueble;
@@ -28,7 +29,16 @@ public class MuebleController {
         }).collect(Collectors.toList());
     }
 
+    @GetMapping("/buscar")
+    public List<MuebleDTO> buscarPorCategoria(@RequestParam String categoria) {
+        return service.buscarPorCategoria(categoria).stream().map(x -> {
+            ModelMapper m = new ModelMapper();
+            return m.map(x, MuebleDTO.class);
+        }).collect(Collectors.toList());
+    }
+
     @PostMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENTE')")
     public void registrar(@RequestBody MuebleDTO dto) {
         ModelMapper m = new ModelMapper();
         Mueble mueble = m.map(dto, Mueble.class);

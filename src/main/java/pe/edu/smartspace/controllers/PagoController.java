@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.smartspace.dtos.PagoDTO;
 import pe.edu.smartspace.entities.Pago;
@@ -30,6 +31,7 @@ public class PagoController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENTE')")
     public void registrar(@RequestBody PagoDTO dto) {
         ModelMapper m = new ModelMapper();
         Pago p = m.map(dto, Pago.class);
