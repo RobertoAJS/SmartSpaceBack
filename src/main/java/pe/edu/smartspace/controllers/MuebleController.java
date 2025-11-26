@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.smartspace.dtos.MuebleDTO;
 import pe.edu.smartspace.entities.Mueble;
-import pe.edu.smartspace.repositories.IMuebleRepository;
 import pe.edu.smartspace.servicesinterfaces.IMuebleService;
 
 import java.util.List;
@@ -73,6 +72,15 @@ public class MuebleController {
         service.eliminar(id);
         return ResponseEntity.ok("Mueble con ID " + id + " eliminado correctamente.");
     }
+
+    @GetMapping("/buscar")
+    public List<MuebleDTO> buscarPorCategoria(@RequestParam String categoria) {
+        return service.buscarPorCategoria(categoria).stream().map(x -> {
+            ModelMapper m = new ModelMapper();
+            return m.map(x, MuebleDTO.class);
+        }).collect(Collectors.toList());
+    }
+
 
 }
 
