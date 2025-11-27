@@ -5,8 +5,9 @@ public class UsuarioDTO {
     private Long idUsuario;
     private String nombre;
     private String email;
-    private String username;   // <--- Nuevo campo
+    private String username;
     private String password;
+    private boolean statusUsuario;
 
     public Long getIdUsuario() {
         return idUsuario;
@@ -46,5 +47,13 @@ public class UsuarioDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isStatusUsuario() {
+        return statusUsuario;
+    }
+
+    public void setStatusUsuario(boolean statusUsuario) {
+        this.statusUsuario = statusUsuario;
     }
 }

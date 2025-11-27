@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.smartspace.dtos.NotificacionDTO;
 import pe.edu.smartspace.entities.Notificacion;
@@ -28,6 +29,7 @@ public class NotificacionController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENTE')")
     public void registrar(@RequestBody NotificacionDTO dto) {
         ModelMapper m = new ModelMapper();
         Notificacion n = m.map(dto, Notificacion.class);

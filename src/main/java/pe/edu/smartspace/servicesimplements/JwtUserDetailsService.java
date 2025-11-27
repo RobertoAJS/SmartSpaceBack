@@ -36,15 +36,15 @@ public class JwtUserDetailsService implements UserDetailsService {
         // Traemos los roles desde la tabla ROLES
         List<Role> rolesUsuario = roleRepo.findByUsuario_IdUsuario(user.getIdUsuario());
 
-        // Convertimos a GrantedAuthority (ADMIN, USER, etc)
+        // Convertimos a GrantedAuthority (AD0MIN, USER, etc)
         List<GrantedAuthority> authorities = new ArrayList<>();
         rolesUsuario.forEach(rol -> {
             authorities.add(new SimpleGrantedAuthority(rol.getRol()));
         });
 
-        // Si por alguna razón no tiene roles, al menos le damos USER
+        // Si por alguna razón no tiene roles, al menos le damos CLIENTE
         if (authorities.isEmpty()) {
-            authorities.add(new SimpleGrantedAuthority("USER"));
+            authorities.add(new SimpleGrantedAuthority("CLIENTE"));
         }
 
         return new org.springframework.security.core.userdetails.User(
