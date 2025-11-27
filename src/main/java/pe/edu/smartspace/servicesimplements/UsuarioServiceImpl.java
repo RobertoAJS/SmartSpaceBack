@@ -54,7 +54,27 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
     @Override
     public void modificar(Usuario u) {
-        uR.save(u);
+        // 1. Buscar el usuario existente en BD
+        Usuario existente = uR.findById(u.getIdUsuario()).orElse(null);
+
+        if (existente == null) {
+            throw new RuntimeException("No existe un usuario con ID " + u.getIdUsuario());
+        }
+        // 2. Actualizar campos
+        existente.setUsername(u.getUsername());
+        existente.setNombre(u.getNombre());
+        existente.setEmail(u.getEmail());
+        existente.setStatusUsuario(u.isStatusUsuario());
+        // 3. Manejar contraseña:
+        //    - Si viene algo en el password → encriptar y actualizar
+        //    - Si viene null o vacío → conservar la contraseña anterior
+        if (u.getPassword() != null && !u.getPassword().isBlank()) {
+            String encoded = passwordEncoder.encode(u.getPassword());
+            existente.setPassword(encoded);
+        }
+
+        // 4. Guardar cambios
+        uR.save(existente);
     }
 
     @Override
