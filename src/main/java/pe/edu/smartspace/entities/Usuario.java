@@ -1,15 +1,17 @@
 package pe.edu.smartspace.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Entity
 @Table(name = "usuarios")
 @Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Usuario {
 
     @Id
@@ -32,21 +34,20 @@ public class Usuario {
     @Column(name = "statusUsuario",nullable = false)
     private boolean statusUsuario;
 
-    // === NUEVO: relación con Role (para que puedas hacer user.getRoles()) ===
+    // === NUEVO: relación con Role (para hacer user.getRoles()) ===
     @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Role> roles = new ArrayList<>();
 
-    public Usuario() {
-    }
+    // Nuevo1: mappedBy = "usuario" indica que en la clase Mueble hay un atributo llamado 'usuario'
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore // IMPORTANTE: Evita que al pedir un usuario se traiga toda la base de datos de muebles
+    private List<Mueble> muebles = new ArrayList<>();
 
-    public Usuario(Long idUsuario, String username, String nombre, String email, String password, boolean statusUsuario) {
-        this.idUsuario = idUsuario;
-        this.username = username;
-        this.nombre = nombre;
-        this.email = email;
-        this.password = password;
-        this.statusUsuario = statusUsuario;
-    }
+    // Nuevo2: Un Usuario tiene muchos Diseños ===
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore // Lo mismo pero con disenos
+    private List<Diseno> disenos = new ArrayList<>();
+
 
     // Métodos auxiliares para Spring Security
     public boolean isEnabled() {
@@ -57,61 +58,6 @@ public class Usuario {
         this.statusUsuario = enabled;
     }
 
-    public Long getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(Long idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public boolean isStatusUsuario() {
-        return statusUsuario;
-    }
-
-    public void setStatusUsuario(boolean statusUsuario) {
-        this.statusUsuario = statusUsuario;
-    }
-
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
 }
 
 
