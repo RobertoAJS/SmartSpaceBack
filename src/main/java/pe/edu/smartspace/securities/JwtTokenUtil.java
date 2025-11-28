@@ -11,10 +11,13 @@ import io.jsonwebtoken.io.Decoders;
 import java.security.Key;
 import io.jsonwebtoken.JwtException;
 import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import pe.edu.smartspace.entities.Usuario;
+import pe.edu.smartspace.repositories.IUsuarioRepository;
 
 import javax.crypto.SecretKey;
 import java.io.Serializable;
@@ -39,6 +42,10 @@ public class JwtTokenUtil implements Serializable {
     private String secret;
 
     private SecretKey signingKey;
+
+    @Autowired
+    private IUsuarioRepository usuarioRepository;
+
 
     @PostConstruct
     private void init() {
@@ -95,19 +102,21 @@ public class JwtTokenUtil implements Serializable {
     // ---- generación de token ----
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
-        // si quieres, añade roles u otros claims aquí
-        claims.put("roles", userDetails.getAuthorities());
-        return doGenerateToken(claims, userDetails.getUsername());
-    }
 
-    public String generateToken(Authentication authentication) {
-        Object principal = authentication.getPrincipal();
-        if (principal instanceof UserDetails) {
-            return generateToken((UserDetails) principal);
-        } else {
-            String username = authentication.getName();
-            return doGenerateToken(new HashMap<>(), username);
+        // 1. Agregar roles (lo que ya tenías)
+        claims.put("roles", userDetails.getAuthorities());
+
+        // 2. --- AGREGAR EL ID ---
+        // Buscamos el usuario completo en la BD usando el username
+        Usuario u = usuarioRepository.findOneByUsername(userDetails.getUsername());
+
+        if (u != null) {
+            claims.put("id", u.getIdUsuario());       // <--- AQUÍ GUARDAMOS EL ID
+            claims.put("nombre", u.getNombre());      // (Opcional) Guardamos el nombre real
         }
+        // ------------------------
+
+        return doGenerateToken(claims, userDetails.getUsername());
     }
 
     private String doGenerateToken(Map<String, Object> claims, String subject) {
