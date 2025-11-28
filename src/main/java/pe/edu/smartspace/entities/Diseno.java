@@ -2,11 +2,13 @@ package pe.edu.smartspace.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "disenos")
 @Getter @Setter
+@NoArgsConstructor // para lombok, crea el constructor vacío
+@AllArgsConstructor // para lombok, crea el constructor con todooo
 public class Diseno {
 
     @Id
@@ -16,67 +18,33 @@ public class Diseno {
     @Column(name = "nombre", length = 100, nullable = false)
     private String nombre;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "fecha_creacion")
-    private Date fechaCreacion;
+    @Column(name = "url_modelo_3d", length = 500, nullable = false)
+    private String urlModelo3d; //  link de Cloudinary
 
     @Column(name = "estado", length = 20)
-    private String estado;
+    private String estado; // Ej: "Publicado", "Borrador"
 
-    // Relación con usuario
+    @Column(name = "fecha_creacion", nullable = false)
+    private LocalDateTime fechaCreacion;
+
+
+    // Relación con usuario (dueño del diseño)
     @ManyToOne
     @JoinColumn(name = "idUsuario", nullable = false)
     private Usuario usuario;
 
+    //Para relacionar con mueble (base del diseño)
+    @ManyToOne
+    @JoinColumn(name = "idMueble", nullable = false)
+    private Mueble mueble;
 
-    public Diseno() {
+    @PrePersist
+    public void asignarFechaAutomaticamente() {
+        this.fechaCreacion = LocalDateTime.now();
+        if (this.estado == null) {
+            this.estado = "Activo"; // Valor por defecto
+        }
     }
 
-    public Diseno(Long idDiseno, String nombre, Date fechaCreacion, String estado, Usuario usuario) {
-        this.idDiseno = idDiseno;
-        this.nombre = nombre;
-        this.fechaCreacion = fechaCreacion;
-        this.estado = estado;
-        this.usuario = usuario;
-    }
 
-    public Long getIdDiseno() {
-        return idDiseno;
-    }
-
-    public void setIdDiseno(Long idDiseno) {
-        this.idDiseno = idDiseno;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public Date getFechaCreacion() {
-        return fechaCreacion;
-    }
-
-    public void setFechaCreacion(Date fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
 }
