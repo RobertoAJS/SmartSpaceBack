@@ -64,6 +64,9 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+                .cors(Customizer.withDefaults())  //temp
+
+
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> req
                         .requestMatchers(
@@ -78,7 +81,9 @@ public class WebSecurityConfig {
                                 "/css/**",
                                 "/js/**"
                         ).permitAll()
+
                         .requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // temp
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())
