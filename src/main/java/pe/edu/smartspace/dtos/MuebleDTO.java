@@ -4,6 +4,8 @@ package pe.edu.smartspace.dtos;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class MuebleDTO {
@@ -27,6 +29,8 @@ public class MuebleDTO {
 
     // Opcional: Para devolver el objeto completo al listar
     private UsuarioDTO usuario;
+
+    private List<DisenoBasicDTO> disenos;
 
 
 }

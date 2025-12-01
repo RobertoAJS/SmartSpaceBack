@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import pe.edu.smartspace.dtos.DisenoBasicDTO;
 import pe.edu.smartspace.dtos.MuebleDTO;
 import pe.edu.smartspace.entities.Mueble;
 import pe.edu.smartspace.entities.Usuario;
@@ -26,11 +27,26 @@ public class MuebleController {
     @Autowired
     private IUsuarioService usuarioService;
 
+
+
     @GetMapping
     public List<MuebleDTO> listar() {
-        return service.listar().stream().map(x -> {
-            ModelMapper m = new ModelMapper();
-            return m.map(x, MuebleDTO.class);
+        return service.listar().stream().map(m -> {
+            ModelMapper modelMapper = new ModelMapper();
+            MuebleDTO dto = modelMapper.map(m, MuebleDTO.class);
+
+            // Lógica manual para convertir la lista de entidades 'Diseno' a 'DisenoBasicDTO'
+            // Verificamos que la lista no sea nula para evitar errores
+            if (m.getDisenos() != null) {
+                List<DisenoBasicDTO> listaDiseños = m.getDisenos().stream()
+                        .map(d -> modelMapper.map(d, DisenoBasicDTO.class))
+                        .collect(Collectors.toList());
+
+                // Insertamos la lista convertida en el DTO del mueble
+                dto.setDisenos(listaDiseños);
+            }
+
+            return dto;
         }).collect(Collectors.toList());
     }
 
@@ -86,7 +102,18 @@ public class MuebleController {
         }
         ModelMapper m = new ModelMapper();
         MuebleDTO dto = m.map(mueble, MuebleDTO.class);
+
+
+        // También cargamos los diseños al ver un solo mueble
+        if (mueble.getDisenos() != null) {
+            List<DisenoBasicDTO> listaDiseños = mueble.getDisenos().stream()
+                    .map(d -> m.map(d, DisenoBasicDTO.class))
+                    .collect(Collectors.toList());
+            dto.setDisenos(listaDiseños);
+        }
+
         return ResponseEntity.ok(dto);
+
     }
 
     @PutMapping
