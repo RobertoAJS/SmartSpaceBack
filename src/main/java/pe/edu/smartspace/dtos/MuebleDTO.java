@@ -21,4 +21,12 @@ public class MuebleDTO {
     private Boolean sostenibilidad;
     private String programaDev;
     private String descripcion;
+
+    // Para recibir el ID simple (ej: 1)
+    private Long idUsuario;
+
+    // Opcional: Para devolver el objeto completo al listar
+    private UsuarioDTO usuario;
+
+
 }

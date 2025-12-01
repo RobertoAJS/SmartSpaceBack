@@ -8,7 +8,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.smartspace.dtos.MuebleDTO;
 import pe.edu.smartspace.entities.Mueble;
+import pe.edu.smartspace.entities.Usuario;
 import pe.edu.smartspace.servicesinterfaces.IMuebleService;
+import pe.edu.smartspace.servicesinterfaces.IUsuarioService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,6 +21,10 @@ public class MuebleController {
 
     @Autowired
     private IMuebleService service;
+
+    // --- Necesitamos el servicio de usuarios para buscar al dueño ---
+    @Autowired
+    private IUsuarioService usuarioService;
 
     @GetMapping
     public List<MuebleDTO> listar() {
@@ -36,12 +42,38 @@ public class MuebleController {
         }).collect(Collectors.toList());
     }
 
+
+    // --- MÉTODO REGISTRAR MODIFICADO ---
     @PostMapping
     @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENTE')")
-    public void registrar(@RequestBody MuebleDTO dto) {
-        ModelMapper m = new ModelMapper();
-        Mueble mueble = m.map(dto, Mueble.class);
-        service.registrar(mueble);
+    public ResponseEntity<?> registrar(@RequestBody MuebleDTO dto) {
+        try {
+            ModelMapper m = new ModelMapper();
+            Mueble mueble = m.map(dto, Mueble.class);
+
+            // 1. Validar que venga el ID del usuario
+            if (dto.getIdUsuario() == null || dto.getIdUsuario() <= 0) {
+                return ResponseEntity.badRequest().body("El ID del usuario es obligatorio para registrar un mueble.");
+            }
+
+            // 2. Buscar el usuario en la base de datos
+            Usuario usuario = usuarioService.buscarPorId(dto.getIdUsuario());
+            if (usuario == null) {
+                return ResponseEntity.badRequest().body("No existe ningún usuario con el ID: " + dto.getIdUsuario());
+            }
+
+            // 3. Asignar el usuario encontrado al mueble
+            // (Esto evita el error 'null value in column id_usuario')
+            mueble.setUsuario(usuario);
+
+            // 4. Guardar
+            service.registrar(mueble);
+            return ResponseEntity.ok("Mueble registrado exitosamente.");
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al registrar el mueble: " + e.getMessage());
+        }
     }
 
     @GetMapping("/{id}")
@@ -62,15 +94,23 @@ public class MuebleController {
         ModelMapper m = new ModelMapper();
         Mueble mueble = m.map(dto, Mueble.class);
 
+        // Nota: Al modificar, asegúrate de no perder el usuario.
+        // Si el DTO no trae usuario, podrías necesitar buscar el mueble original y reasignarle su dueño.
         Mueble existente = service.buscarPorId(mueble.getIdMueble());
         if (existente == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("No se puede modificar. No existe un mueble con el ID: " + mueble.getIdMueble());
         }
 
+        // Mantenemos el usuario original si no se envió uno nuevo
+        if (mueble.getUsuario() == null) {
+            mueble.setUsuario(existente.getUsuario());
+        }
+
         service.modificar(mueble);
         return ResponseEntity.ok("Mueble con ID " + mueble.getIdMueble() + " modificado correctamente.");
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminar(@PathVariable("id") Long id) {
