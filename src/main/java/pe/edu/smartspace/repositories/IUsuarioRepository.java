@@ -1,0 +1,27 @@
+package pe.edu.smartspace.repositories;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
+import pe.edu.smartspace.entities.Usuario;
+
+import java.util.List;
+
+public interface IUsuarioRepository extends JpaRepository<Usuario, Long> {
+    Usuario findOneByUsername(String username);
+
+    // Buscar si ya existe ese username
+    @Query("select count(u.username) from Usuario u where u.username = :username")
+    int buscarUsername(@Param("username") String username);
+
+    // Insertar rol en la tabla roles
+    @Transactional
+    @Modifying
+    @Query(value = "insert into roles (rol, user_id) values (:rol, :user_id)", nativeQuery = true)
+    void insRol(@Param("rol") String rol, @Param("user_id") Long userId);
+}  
+
