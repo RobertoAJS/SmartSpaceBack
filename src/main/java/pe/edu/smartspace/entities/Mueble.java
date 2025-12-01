@@ -53,15 +53,15 @@ public class Mueble {
 
 // RELACIONES
 
-    // Relación con el Dueño (Cliente)
-
+    // 1. Relación con el Dueño (Cliente)
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
 
-    // Relación con sus Diseños (Un mueble puede tener varias versiones/diseños 3D)
-    // Esto permite que al borrar el mueble, se borren sus diseños automáticamente (Cascade)
-    @OneToMany(mappedBy = "mueble", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore // Evita bucles infinitos al pedir datos
+
+    // 2. Relación con sus Diseños
+    // CORRECCIÓN CLAVE: Usamos FetchType.EAGER para evitar el error LazyInitializationException
+    @OneToMany(mappedBy = "mueble", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnore // Evita bucles infinitos al serializar
     private List<Diseno> disenos = new ArrayList<>();
 }
