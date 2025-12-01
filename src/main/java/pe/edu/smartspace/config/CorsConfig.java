@@ -14,7 +14,7 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:4200","https://smartspaceai.netlify.app")   // tu Angular
+                        .allowedOrigins("https://smartspaceai.netlify.app")   // tu Angular "http://localhost:4200",
                         .allowedMethods("*")
                         .allowedHeaders("*")
                         .allowCredentials(true);
